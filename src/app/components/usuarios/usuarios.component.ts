@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { UsuariosService } from 'src/app/services/usuarios.service';
 
 @Component({
     selector: 'app-usuarios',
@@ -11,18 +12,20 @@ export class UsuariosComponent implements OnInit{
 
     usuarios: any[] = [];
     constructor(
-        private http: HttpClient){
+        private http: HttpClient,
+        private usuariosService: UsuariosService){
 
-           
 
     }
 
     ngOnInit() {
-        this.http.get('http://localhost:8080/capi_examen_back_Jose_Luis_Heras_Regules/public/getusuarios')
-        .subscribe( data  => {
-            //  this.usuarios = data;
-            console.log(data)
-        })
+        // // var usuarios = [];
+        this.usuariosService.getUsuarios().subscribe( (data: any)  => {
+             this.usuarios = data.data;
+             console.log(this.usuarios);
+          })
+
+        
         console.log(this.usuarios);
     }
 
